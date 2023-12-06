@@ -1,0 +1,42 @@
+version: '3.9'
+services:
+  postgresql:
+    build:
+      context: ./postgresql
+    container_name: postgres-TL
+    environment:
+      POSTGRES_DB: tldatabase
+      POSTGRES_USER: tl
+      POSTGRES_PASSWORD: tlpassword
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./postgresql/init.sql:/docker-entrypoint-initdb.d/init.sql
+
+  nodejs:
+    build:
+      context: ./nodejs
+    container_name: nodejs-TL
+    depends_on:
+      - postgresql
+    ports:
+      - "3000:3000"
+    environment:
+      POSTGRES_HOST: postgres-TL
+      POSTGRES_DB: tldatabase
+      POSTGRES_USER: tl
+      POSTGRES_PASSWORD: tlpassword
+
+  nginx:
+    build:
+      context: ./nginx
+    container_name: nginx-TL
+    ports:
+      - "80:80"
+    volumes: 
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf
+      - ./nginx:/usr/share/nginx/html
+    depends_on:
+      - nodejs
+
+volumes:
+  postgres_data:
