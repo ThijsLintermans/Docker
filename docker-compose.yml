@@ -32,7 +32,7 @@ services:
     container_name: nginx-TL
     ports:
       - "80:80"
-    volumes: 
+    volumes:
       - ./nginx/nginx.conf:/etc/nginx/nginx.conf
       - ./nginx:/usr/share/nginx/html
     depends_on:
