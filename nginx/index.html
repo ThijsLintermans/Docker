@@ -12,7 +12,7 @@
 
     <script>
       // fetch user from API
-      fetch("http://192.168.56.5:3000/user")
+      fetch("http://nodejstl.local/user")
         .then((res) => res.json())
         .then((data) => {
           // get user name
@@ -22,7 +22,7 @@
         });
 
 	 // Fetch container ID from the API
-      fetch("http://192.168.56.5:3000/containerId")
+      fetch("http://nodejstl.local/containerId")
         .then((res) => res.json())
         .then((data) => {
           // Get container ID
